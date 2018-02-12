@@ -57,6 +57,25 @@ class UserStore {
 
     }
 
+    _addUser(realm, user){
+
+        // Add user to realm
+        let realmUsers = realm.objects('User');
+        let realmUser = realmUsers.filtered(`id = ${user.id}`);
+
+        if(Object.keys(realmUser).length === 0 ){
+
+            console.log('Adding user...');
+
+            realm.write(() => {
+
+                realm.create('User', user);
+
+            });
+
+        }
+    }
+
     @action.bound
     getUsers(){
 
@@ -105,26 +124,6 @@ class UserStore {
 
         });
 
-
-    }
-
-    _addUser(realm, user){
-
-        // Add user to realm
-        let realmUsers = realm.objects('User');
-        let realmUser = realmUsers.filtered(`id = ${user.id}`);
-
-        if(Object.keys(realmUser).length === 0 ){
-
-            console.log('Adding user...');
-
-            realm.write(() => {
-
-                realm.create('User', user);
-
-            });
-
-        }
     }
 
 }
