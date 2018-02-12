@@ -9,7 +9,8 @@ const UserSchema = {
         key: 'string?',
         name: 'string',
         username: 'string?',
-        email: 'string?'
+        email: 'string?',
+        phone: 'string?'
     }
 
 };

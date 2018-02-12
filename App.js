@@ -30,7 +30,21 @@ export default class App extends Component<Props> {
 
     componentDidMount(){
 
-        rootStore.userStore.fetchUsers();
+        // rootStore.userStore.fetchUsers();
+        rootStore.userStore.getUsers()
+        .then(users => {
+
+            if(!users){
+
+                rootStore.userStore.fetchUsers();
+
+            }
+
+        })
+        .catch(err => {
+            console.log('[Error] getUsers');
+            console.log(err);
+        });
 
     }
 
