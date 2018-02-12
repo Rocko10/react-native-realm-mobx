@@ -33,15 +33,12 @@ export default class App extends Component<Props> {
         return (
             <View style={styles.container}>
 
-                <Text style={styles.welcome}>
-                    Welcome to React Native!
-                </Text>
-                <Text style={styles.instructions}>
-                    To get started, edit App.js
-                </Text>
-                <Text style={styles.instructions}>
-                    {instructions}
-                </Text>
+                <View style={styles.elem}>
+                    <Text>List of users</Text>
+                </View>
+                <View style={styles.elem}>
+                    <Text>Details of user</Text>
+                </View>
 
             </View>
         );
@@ -52,7 +49,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
@@ -65,4 +61,9 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  elem: {
+      flex: 1,
+      backgroundColor: 'gray',
+      alignItems: 'center'
+  }
 });
