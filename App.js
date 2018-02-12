@@ -4,8 +4,12 @@ import {
   StyleSheet,
   Text,
   View,
-  ToastAndroid
+  ToastAndroid,
+  FlatList,
+  Button
 } from 'react-native';
+
+import { observer } from 'mobx-react';
 
 import Realm from 'realm';
 
@@ -21,6 +25,7 @@ const instructions = Platform.select({
 });
 
 type Props = {};
+@observer
 export default class App extends Component<Props> {
 
     componentDidMount(){
@@ -29,12 +34,38 @@ export default class App extends Component<Props> {
 
     }
 
+    _renderRow(item){
+
+        return <View style={{backgroundColor: 'orange', flex: 1, flexDirection: 'row'}}>
+
+            <View style={{alignItems: 'center', justifyContent: 'center', flex: 2}}>
+                <Text>{item.name}</Text>
+            </View>
+
+            <View style={{flex: 1}}>
+                <Button
+                    title={'Details'}
+                    onPress={e => null}
+                />
+            </View>
+
+        </View>;
+
+    }
+
     render() {
         return (
             <View style={styles.container}>
 
                 <View style={styles.elem}>
-                    <Text>List of users</Text>
+
+                    <Text>List of users {rootStore.userStore.users.length}</Text>
+
+                    <FlatList
+                        data={rootStore.userStore.users}
+                        renderItem={ ({item}) => this._renderRow(item) }
+                    />
+
                 </View>
                 <View style={styles.elem}>
                     <Text>Details of user</Text>
@@ -63,7 +94,6 @@ const styles = StyleSheet.create({
   },
   elem: {
       flex: 1,
-      backgroundColor: 'gray',
-      alignItems: 'center'
+      backgroundColor: 'gray'
   }
 });

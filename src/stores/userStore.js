@@ -9,14 +9,41 @@ class UserStore {
     @action.bound
     fetchUsers(){
 
-        this._addUser({ name: 'User', id: 1 });
+        const url = 'https://jsonplaceholder.typicode.com/users';
+
+        fetch(url)
+        .then(res => res.json())
+        .then(users => {
+
+
+            for(let i = 0; i < users.length; i++){
+
+                this.users.push({
+                    id: users[i]['id'],
+                    name: users[i]['name'],
+                    key: `${users[i]['id']}`
+                });
+
+                console.log('Added user to userStore');
+                console.log(this.users[i]['key']);
+
+                // this._addUser({
+                //     id: users[i]['id'],
+                //     name: users[i]['name']
+                //     key: `${users[i]['id']}`
+                // });
+
+            }
+
+        });
 
     }
 
     _addUser(user){
 
+        // TODO: Add to realm
         console.log('Adding user to Realm');
-        console.log(user);
+        console.log(user.name);
 
     }
 
