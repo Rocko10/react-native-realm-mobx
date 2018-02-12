@@ -1,16 +1,17 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  ToastAndroid
 } from 'react-native';
+
+import Realm from 'realm';
+
+import UserSchema from './src/schemas/userSchema.js';
+
+import rootStore from './src/rootStore';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -21,9 +22,17 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+
+    componentDidMount(){
+
+        rootStore.userStore.fetchUsers();
+
+    }
+
     render() {
         return (
             <View style={styles.container}>
+
                 <Text style={styles.welcome}>
                     Welcome to React Native!
                 </Text>
@@ -33,6 +42,7 @@ export default class App extends Component<Props> {
                 <Text style={styles.instructions}>
                     {instructions}
                 </Text>
+
             </View>
         );
     }
