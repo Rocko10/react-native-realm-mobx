@@ -59,11 +59,24 @@ export default class App extends Component<Props> {
             <View style={{flex: 1}}>
                 <Button
                     title={'Details'}
-                    onPress={e => null}
+                    onPress={e => this._handleDetails(e, item.id)}
                 />
             </View>
 
         </View>;
+
+    }
+
+    _handleDetails(e, userID){
+
+        rootStore.userStore.userDetail(userID)
+        .then(user => null)
+        .catch(err => {
+
+            console.log('[Error] _handleDetails');
+            console.log(err);
+
+        })
 
     }
 
@@ -83,6 +96,10 @@ export default class App extends Component<Props> {
                 </View>
                 <View style={styles.elem}>
                     <Text>Details of user</Text>
+                    <Text> Name: {rootStore.userStore.user.name} </Text>
+                    <Text> Email: {rootStore.userStore.user.email} </Text>
+                    <Text> Username: {rootStore.userStore.user.username} </Text>
+                    <Text> Phone: {rootStore.userStore.user.phone} </Text>
                 </View>
 
             </View>

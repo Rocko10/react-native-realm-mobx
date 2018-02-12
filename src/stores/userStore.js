@@ -5,6 +5,7 @@ import UserSchema from './../schemas/userSchema';
 class UserStore {
 
     @observable users = [];
+    @observable user = {};
 
     @action.bound
     fetchUsers(){
@@ -65,8 +66,6 @@ class UserStore {
 
         if(Object.keys(realmUser).length === 0 ){
 
-            console.log('Adding user...');
-
             realm.write(() => {
 
                 realm.create('User', user);
@@ -123,6 +122,38 @@ class UserStore {
             });
 
         });
+
+    }
+
+    @action.bound
+    userDetail(userID){
+
+        return new Promise((resolve, reject) => {
+
+            Realm.open({
+                schema: [ UserSchema ],
+                deleteRealmIfMigrationNeeded: true
+            })
+            .then(realm => {
+
+                let users = realm.objects('User');
+                let user = users.filtered(`id = ${userID}`);
+
+                if(Object.keys(user).length > 0){
+
+                    // The filtered object in realm are given back by { '0' : {...} }
+                    this.user = user[0];
+                    return resolve(user)
+
+                }
+
+                return reject('No user founded');
+
+            })
+            .catch(err => { reject(err) });
+
+        });
+
 
     }
 
